@@ -25,14 +25,19 @@ public class GamblingImpl {
 				todayMoney -= BET_MONEY;
 			}
 		}
-		System.out.println("Resigned for the Day with : " + todayMoney);
-		return (todayMoney - TOTAL_MONEY);
+		int winOrLossMoney = todayMoney - TOTAL_MONEY;
+		if (winOrLossMoney < 0)
+			System.out.println(" Resigned for the Day with loss of : " + (winOrLossMoney*-1));
+		else
+			System.out.println(" Resigned for the Day with win of : " + winOrLossMoney);
+		return winOrLossMoney;
 	}
 
 	// UC4
 	public void totalWinsOrLoss() {
 		int totalAmountAfter20Days = 0;
 		for (int i = 0; i < 20; i++) {
+			System.out.print("For Day " + (i + 1));
 			totalAmountAfter20Days += gamble();
 		}
 		if (totalAmountAfter20Days < 0)
