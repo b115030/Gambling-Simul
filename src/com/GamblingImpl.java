@@ -27,7 +27,7 @@ public class GamblingImpl {
 		}
 		int winOrLossMoney = todayMoney - TOTAL_MONEY;
 		if (winOrLossMoney < 0)
-			System.out.println(" Resigned for the Day with loss of : " + (winOrLossMoney*-1));
+			System.out.println(" Resigned for the Day with loss of : " + winOrLossMoney);
 		else
 			System.out.println(" Resigned for the Day with win of : " + winOrLossMoney);
 		return winOrLossMoney;
@@ -35,14 +35,45 @@ public class GamblingImpl {
 
 	// UC4
 	public void totalWinsOrLoss() {
-		int totalAmountAfter20Days = 0;
+		int totalAmountAfter20Days = 0, maxWin = -1001, maxLoss = 1001, luckiestDay = 0, unluckiestDay = 0;
+		int[] array = new int[20];
 		for (int i = 0; i < 20; i++) {
 			System.out.print("For Day " + (i + 1));
-			totalAmountAfter20Days += gamble();
+			array[i] = gamble();
+			totalAmountAfter20Days += array[i];
+
 		}
+
 		if (totalAmountAfter20Days < 0)
 			System.out.println("Total loss " + totalAmountAfter20Days);
 		else
 			System.out.println("total win " + totalAmountAfter20Days);
+		luckiestDay(array);
+	}
+
+	public void luckiestDay(int[] array) {
+		int unluckyCount=0, luckyCount=0,maxLoss = 1001,maxWin = -1001, win = 0,loss = 0,temp;
+		for (int i = 0; i < array.length; i++) {
+			temp = array[i];
+			if (temp < 0) {
+				win = 0;
+				loss += temp;
+				if (loss < maxLoss) {
+					maxLoss = loss;
+					unluckyCount = i;
+
+				}
+
+			} else {
+				loss = 0;
+				win += temp;
+				if (win > maxWin) {
+					maxWin = win;
+					luckyCount = i;
+				}
+			}
+		}
+		System.out.println("Luckiest Day " + luckyCount + " with win of " + maxWin);
+		System.out.println("Unluckiest Day " + unluckyCount + " with loss of " + maxLoss);
 	}
 }
